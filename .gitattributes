@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.png binary
+*.vsix binary
+# DICOM fixtures are binary; never normalise their line endings.
+*.dcm binary
+*.dicom binary
+*.nii binary
+*.gz binary

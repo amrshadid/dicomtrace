@@ -1,0 +1,142 @@
+{
+  "name": "dicomtrace",
+  "displayName": "DicomTrace",
+  "description": "Trace any DICOM tag or NIfTI header field from its decoded value to the exact bytes that encode it, with the image, the tag tree and the hex in one linked, read-only view.",
+  "version": "0.1.0",
+  "publisher": "dicomtrace",
+  "license": "MIT",
+  "preview": true,
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amrshadid/dicomtrace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amrshadid/dicomtrace/issues"
+  },
+  "keywords": [
+    "dicom",
+    "hex",
+    "medical imaging",
+    "binary",
+    "inspector",
+    "offsets"
+  ],
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#f5f4ef",
+    "theme": "light"
+  },
+  "engines": {
+    "vscode": "^1.100.0",
+    "node": ">=22"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "In untrusted workspaces, the go-dicom executable path is only taken from user settings, never from workspace settings.",
+      "restrictedConfigurations": [
+        "dicomTrace.goDicomPath"
+      ]
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "dicomTrace.inspector",
+        "displayName": "DicomTrace",
+        "selector": [
+          {
+            "filenamePattern": "*.dcm"
+          },
+          {
+            "filenamePattern": "*.dicom"
+          },
+          {
+            "filenamePattern": "*.nii"
+          },
+          {
+            "filenamePattern": "*.nii.gz"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "configuration": {
+      "title": "DicomTrace",
+      "properties": {
+        "dicomTrace.goDicomPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Absolute path to the `go-dicom` executable (version 1.9.1 or later). Leave empty to look it up on `PATH`. Ignored in workspace settings of untrusted workspaces.",
+          "scope": "machine-overridable"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "build:prod": "node esbuild.mjs --production",
+    "watch": "node esbuild.mjs --watch",
+    "compile-tests": "node -e \"require('fs').rmSync('out',{recursive:true,force:true})\" && tsc -p test/integration/tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p src/core/tsconfig.json --noEmit && tsc -p src/webview/tsconfig.json --noEmit && tsc -p test/integration/tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "npm run build && npm run compile-tests && vscode-test",
+    "fixtures:go-dicom": "node scripts/record-go-dicom-json.mjs",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm run test",
+    "package": "vsce package --no-dependencies",
+    "vscode:prepublish": "npm run build:prod"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/mocha": "10.0.10",
+    "@types/node": "22.20.5",
+    "@types/vscode": "1.100.0",
+    "@vitest/coverage-v8": "5.1.0",
+    "@vscode/test-cli": "0.0.15",
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "4.1.1",
+    "esbuild": "0.28.2",
+    "eslint": "10.15.0",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.14.0",
+    "ovsx": "1.4.0",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2",
+    "vitest": "5.1.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  },
+  "dependencies": {
+    "@cornerstonejs/core": "5.18.3",
+    "@cornerstonejs/dicom-image-loader": "5.18.3",
+    "@cornerstonejs/metadata": "5.18.3",
+    "@cornerstonejs/tools": "5.18.3",
+    "@kitware/vtk.js": "36.4.1",
+    "d3-array": "3.2.4",
+    "d3-interpolate": "3.0.1",
+    "dicom-parser": "1.8.21",
+    "events": "3.3.0",
+    "gl-matrix": "3.4.3",
+    "url": "0.11.4"
+  },
+  "overrides": {
+    "adm-zip": "0.6.1",
+    "fflate": "0.7.5",
+    "uuid": "11.1.1"
+  }
+}

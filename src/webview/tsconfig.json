@@ -1,0 +1,14 @@
+{
+  // The webview bundle runs in a browser sandbox: DOM, no Node.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": [],
+    "rootDir": "..",
+    "noEmit": true
+  },
+  "include": ["../webview", "../protocol", "../core"],
+  "exclude": []
+}

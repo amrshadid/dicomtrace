@@ -1,0 +1,13 @@
+{
+  // The functional core: no Node types and no DOM, so a stray
+  // `Buffer`, `process` or `document` fails the type check, not just lint.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": [],
+    "rootDir": "..",
+    "noEmit": true
+  },
+  "include": ["../core", "../protocol"],
+  "exclude": []
+}
