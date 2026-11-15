@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest an improvement.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        DicomTrace deliberately does one thing: it takes you from a decoded tag
+        to the exact bytes that encode it, and back. It is read-only and not a clinical viewer.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you facing?
+      description: Describe the file and the debugging task, not the solution. What did you still need another tool for?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?

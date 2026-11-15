@@ -1,0 +1,47 @@
+name: Bug report
+description: Something doesn't work as documented, or a byte range looks wrong.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never attach patient data.** DICOM files can contain protected health information
+        (PHI). If a file is needed to reproduce the problem, attach a **de-identified** or
+        synthetic file, or a public test file, and say where it came from.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead? For a wrong highlight, name the tag and the offsets you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the file with "Open With… → DicomTrace"
+        2. Select (0028,0010) Rows
+        3. …
+    validations:
+      required: true
+  - type: input
+    id: file
+    attributes:
+      label: File
+      description: Transfer syntax, size, and where the (de-identified) file comes from.
+      placeholder: Explicit VR Little Endian, 9.8 KB, pydicom test file MR_small.dcm
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: DicomTrace 0.1.0, go-dicom 1.9.1, VS Code 1.10x, macOS 15
+    validations:
+      required: true
+  - type: checkboxes
+    id: phi
+    attributes:
+      label: Privacy
+      options:
+        - label: I have not attached or pasted any patient data.
+          required: true
