@@ -1,0 +1,71 @@
+name: Release
+
+# Push a tag that matches package.json, e.g. `v0.1.0`, to publish.
+# Publishing to a registry is skipped when its token secret isn't configured.
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the GitHub release
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+
+      - name: Check the tag matches package.json
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match package.json version ${version}"
+            exit 1
+          fi
+
+      - name: Install go-dicom (checksum-verified)
+        env:
+          GO_DICOM_VERSION: v1.9.1
+          GO_DICOM_SHA256: b93006f4dc667eb869eab824af9cebe89c3d801539f4355a1d578f20ca109342
+        run: |
+          bin="${RUNNER_TEMP}/go-dicom/go-dicom"
+          mkdir -p "$(dirname "${bin}")"
+          curl -fsSL -o "${bin}" \
+            "https://github.com/amrshadid/go-dicom/releases/download/${GO_DICOM_VERSION}/go-dicom-linux-amd64"
+          echo "${GO_DICOM_SHA256}  ${bin}" | sha256sum -c -
+          chmod +x "${bin}"
+          echo "GO_DICOM_PATH=${bin}" >> "${GITHUB_ENV}"
+      - run: npm run check
+      - run: xvfb-run -a npm run test:integration
+      - run: npm run package
+
+      # Secrets can't be tested in `if:` directly, so each step checks its token.
+      - name: Publish to the VS Code Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          if [ -z "${VSCE_PAT}" ]; then echo "VSCE_PAT not set: skipping."; exit 0; fi
+          npx vsce publish --packagePath ./*.vsix
+
+      - name: Publish to Open VSX
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          if [ -z "${OVSX_PAT}" ]; then echo "OVSX_PAT not set: skipping."; exit 0; fi
+          npx ovsx publish ./*.vsix
+
+      # 0.x versions are pilot builds, so they are marked as pre-releases.
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          flags=()
+          case "${GITHUB_REF_NAME}" in v0.*) flags+=(--prerelease) ;; esac
+          gh release create "${GITHUB_REF_NAME}" ./*.vsix --title "${GITHUB_REF_NAME}" --generate-notes "${flags[@]}"

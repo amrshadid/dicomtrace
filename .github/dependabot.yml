@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      # Cornerstone packages pin each other exactly; update them together, and only
+      # after the integration tests pass.
+      cornerstone:
+        patterns: ['@cornerstonejs/*']
+      dev-dependencies:
+        dependency-type: development
+    ignore:
+      # Must match the minimum VS Code version in `engines.vscode`. Newer types
+      # would allow APIs that don't exist on older VS Code, and vsce refuses to
+      # package when they don't match. Bump together with `engines` by hand.
+      - dependency-name: '@types/vscode'
+      # VS Code's extension host runs Node 22; the types should describe it.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # typescript-eslint supports TypeScript < 6.1. Revisit when it supports 7.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+      # Cornerstone 5.x pins these peers to exact versions. They move only together with
+      # the @cornerstonejs packages, by hand, after the integration tests pass.
+      - dependency-name: '@kitware/vtk.js'
+      - dependency-name: 'gl-matrix'
+      - dependency-name: 'd3-array'
+      - dependency-name: 'd3-interpolate'
+      - dependency-name: 'dicom-parser'
+    commit-message:
+      prefix: build
+      include: scope
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
