@@ -71,6 +71,20 @@ input {
   grid-template-rows: auto auto 1fr auto;
   height: 100%;
 }
+/* Each strip has its own row. Without this, the hidden empty banner strip lets the panes
+   slide into an auto row sized to their content, and an image shown alone collapses. */
+.titlebar {
+  grid-row: 1;
+}
+.banners {
+  grid-row: 2;
+}
+.panes {
+  grid-row: 3;
+}
+.statusbar {
+  grid-row: 4;
+}
 
 /* Title strip: the drawing's title block. */
 .titlebar {

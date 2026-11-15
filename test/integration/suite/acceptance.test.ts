@@ -327,6 +327,49 @@ suite('Acceptance', function () {
     });
   });
 
+  suite('Image alone', () => {
+    for (const uri of [dicomUri('MR_small'), niftiUri('anatomical.nii')]) {
+      test(`the image stays when it is the only pane: ${uri.path.split('/').pop() ?? ''}`, async function () {
+        if (uri.path.endsWith('.dcm') && !GO_DICOM) this.skip();
+        await openInInspector(uri);
+        const start = await waitForUi(uri, (s) => imageSettled(s) && s.image !== null);
+        // The layout is remembered across files: start from Image + Tags, then hide Tags.
+        if (!start.panes[1]) await ui(uri, { kind: 'togglePane', name: 'tags' });
+        if (start.panes[2]) await ui(uri, { kind: 'togglePane', name: 'bytes' });
+        const wide = await waitForUi(uri, (s) => s.image !== null && s.image.litFraction > 0.05);
+        const alone = await ui(uri, { kind: 'togglePane', name: 'tags' });
+        assert.deepEqual(alone.panes, [true, false, false]);
+        const drawn = await waitForUi(
+          uri,
+          (s) =>
+            s.image !== null &&
+            s.image.litFraction > 0.05 &&
+            s.image.width > (start.image?.width ?? 0),
+        ).catch(() => ui(uri));
+        assert.ok(drawn.image, 'an image canvas is present');
+        assert.ok(
+          drawn.image.litFraction > 0.05,
+          `the image is drawn: ${JSON.stringify(drawn.image)}`,
+        );
+        assert.ok(
+          drawn.image.width > (wide.image?.width ?? 0),
+          `and fills the wider pane: ${wide.image?.width ?? 0} → ${drawn.image.width}`,
+        );
+        // Back to all panes: the image is still there.
+        await ui(uri, { kind: 'togglePane', name: 'tags' });
+        const back = await waitForUi(
+          uri,
+          (s) => s.image !== null && s.image.litFraction > 0.05,
+        ).catch(() => ui(uri));
+        assert.ok(
+          back.image && back.image.litFraction > 0.05,
+          `drawn again: ${JSON.stringify(back.image)}`,
+        );
+        clean(back);
+      });
+    }
+  });
+
   suite('NIfTI', () => {
     for (const [file, version] of [
       ['anatomical.nii', 1],
