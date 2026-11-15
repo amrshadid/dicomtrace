@@ -1,0 +1,122 @@
+{
+  "extensions": [
+    {
+      "code": 6,
+      "size": 32
+    },
+    {
+      "code": 6,
+      "size": 32
+    }
+  ],
+  "fields": {
+    "aux_file": "",
+    "bitpix": 16,
+    "cal_max": 1162.0,
+    "cal_min": 0.0,
+    "data_type": "",
+    "datatype": 4,
+    "db_name": "",
+    "descrip": "FSL3.3",
+    "dim": [
+      4,
+      128,
+      96,
+      24,
+      2,
+      1,
+      1,
+      1
+    ],
+    "dim_info": 57,
+    "extents": 0,
+    "glmax": 0,
+    "glmin": 0,
+    "intent_code": 0,
+    "intent_name": "",
+    "intent_p1": 0.0,
+    "intent_p2": 0.0,
+    "intent_p3": 0.0,
+    "magic": "n+1",
+    "pixdim": [
+      -1.0,
+      2.0,
+      2.0,
+      2.1999990940093994,
+      2000.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "qform_code": 1,
+    "qoffset_x": 117.8551025390625,
+    "qoffset_y": -35.72294235229492,
+    "qoffset_z": -7.248798370361328,
+    "quatern_b": -1.9451068140294884e-26,
+    "quatern_c": -0.9967085123062134,
+    "quatern_d": -0.0810687392950058,
+    "regular": "r",
+    "scl_inter": 0.0,
+    "scl_slope": 1.0,
+    "session_error": 0,
+    "sform_code": 1,
+    "sizeof_hdr": 348,
+    "slice_code": 0,
+    "slice_duration": 0.0,
+    "slice_end": 23,
+    "slice_start": 0,
+    "srow_x": [
+      -2.0,
+      6.714715653593746e-19,
+      9.081024511081715e-18,
+      117.8551025390625
+    ],
+    "srow_y": [
+      -6.714715653593746e-19,
+      1.9737114906311035,
+      -0.35552823543548584,
+      -35.72294235229492
+    ],
+    "srow_z": [
+      8.25548088896093e-18,
+      0.3232076168060303,
+      2.171081781387329,
+      -7.248798370361328
+    ],
+    "toffset": 0.0,
+    "vox_offset": 416.0,
+    "xyzt_units": 10
+  },
+  "littleEndian": true,
+  "nibabel": "5.3.2",
+  "shape": [
+    128,
+    96,
+    24,
+    2
+  ],
+  "slice": {
+    "max": 1022.0,
+    "mean": 185.3916015625,
+    "min": 0.0,
+    "probes": [
+      {
+        "value": 0.0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "value": 265.0,
+        "x": 64,
+        "y": 48
+      },
+      {
+        "value": 0.0,
+        "x": 127,
+        "y": 95
+      }
+    ],
+    "z": 12
+  },
+  "version": 1
+}

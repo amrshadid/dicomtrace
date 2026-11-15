@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "file": "test/fixtures/dicom/meta_missing_tsyntax.dcm",
+  "size": 317,
+  "preamble": true,
+  "regions": [
+    {
+      "name": "preamble",
+      "offset": 0,
+      "endOffset": 128
+    },
+    {
+      "name": "prefix",
+      "offset": 128,
+      "endOffset": 132
+    },
+    {
+      "name": "fileMeta",
+      "offset": 132,
+      "endOffset": 202
+    },
+    {
+      "name": "dataSet",
+      "offset": 202,
+      "endOffset": 317
+    }
+  ],
+  "transferSyntax": {
+    "uid": "",
+    "explicitVR": false,
+    "littleEndian": true,
+    "deflated": false
+  },
+  "offsetsRelativeTo": "file",
+  "fileMeta": [
+    {
+      "tag": "(0002,0000)",
+      "keyword": "FileMetaInformationGroupLength",
+      "name": "File Meta Information Group Length",
+      "vr": "UL",
+      "vm": 1,
+      "value": "58",
+      "tagOffset": 132,
+      "vrOffset": 136,
+      "lengthOffset": 138,
+      "lengthSize": 2,
+      "valueOffset": 140,
+      "valueLength": 4,
+      "undefinedLength": false,
+      "endOffset": 144
+    },
+    {
+      "tag": "(0002,0001)",
+      "keyword": "FileMetaInformationVersion",
+      "name": "File Meta Information Version",
+      "vr": "OB",
+      "vm": 1,
+      "tagOffset": 144,
+      "vrOffset": 148,
+      "lengthOffset": 152,
+      "lengthSize": 4,
+      "valueOffset": 156,
+      "valueLength": 2,
+      "undefinedLength": false,
+      "endOffset": 158
+    },
+    {
+      "tag": "(0002,0002)",
+      "keyword": "MediaStorageSOPClassUID",
+      "name": "Media Storage SOP Class UID",
+      "vr": "UI",
+      "vm": 0,
+      "value": "",
+      "tagOffset": 158,
+      "vrOffset": 162,
+      "lengthOffset": 164,
+      "lengthSize": 2,
+      "valueOffset": 166,
+      "valueLength": 0,
+      "undefinedLength": false,
+      "endOffset": 166
+    },
+    {
+      "tag": "(0002,0003)",
+      "keyword": "MediaStorageSOPInstanceUID",
+      "name": "Media Storage SOP Instance UID",
+      "vr": "UI",
+      "vm": 0,
+      "value": "",
+      "tagOffset": 166,
+      "vrOffset": 170,
+      "lengthOffset": 172,
+      "lengthSize": 2,
+      "valueOffset": 174,
+      "valueLength": 0,
+      "undefinedLength": false,
+      "endOffset": 174
+    },
+    {
+      "tag": "(0002,0012)",
+      "keyword": "ImplementationClassUID",
+      "name": "Implementation Class UID",
+      "vr": "UI",
+      "vm": 1,
+      "value": "1234567890.1998.310",
+      "tagOffset": 174,
+      "vrOffset": 178,
+      "lengthOffset": 180,
+      "lengthSize": 2,
+      "valueOffset": 182,
+      "valueLength": 20,
+      "undefinedLength": false,
+      "endOffset": 202
+    }
+  ],
+  "dataSet": [
+    {
+      "tag": "(0001,0001)",
+      "keyword": "",
+      "name": "",
+      "vr": "SQ",
+      "vm": 1,
+      "tagOffset": 202,
+      "vrOffset": null,
+      "lengthOffset": 206,
+      "lengthSize": 4,
+      "valueOffset": 210,
+      "valueLength": 89,
+      "undefinedLength": true,
+      "endOffset": 307,
+      "items": [
+        {
+          "tag": "(FFFE,E000)",
+          "tagOffset": 210,
+          "lengthOffset": 214,
+          "lengthSize": 4,
+          "valueOffset": 218,
+          "valueLength": 73,
+          "undefinedLength": true,
+          "endOffset": 299,
+          "elements": [
+            {
+              "tag": "(0001,0001)",
+              "keyword": "",
+              "name": "",
+              "vr": "SQ",
+              "vm": 1,
+              "tagOffset": 218,
+              "vrOffset": null,
+              "lengthOffset": 222,
+              "lengthSize": 4,
+              "valueOffset": 226,
+              "valueLength": 40,
+              "undefinedLength": true,
+              "endOffset": 274,
+              "items": [
+                {
+                  "tag": "(FFFE,E000)",
+                  "tagOffset": 226,
+                  "lengthOffset": 230,
+                  "lengthSize": 4,
+                  "valueOffset": 234,
+                  "valueLength": 24,
+                  "undefinedLength": true,
+                  "endOffset": 266,
+                  "elements": [
+                    {
+                      "tag": "(0001,0001)",
+                      "keyword": "",
+                      "name": "",
+                      "vr": "",
+                      "vm": 1,
+                      "value": "Double Nested SQ",
+                      "tagOffset": 234,
+                      "vrOffset": null,
+                      "lengthOffset": 238,
+                      "lengthSize": 4,
+                      "valueOffset": 242,
+                      "valueLength": 16,
+                      "undefinedLength": false,
+                      "endOffset": 258
+                    }
+                  ],
+                  "delimiter": {
+                    "tag": "(FFFE,E00D)",
+                    "tagOffset": 258,
+                    "endOffset": 266
+                  }
+                }
+              ],
+              "delimiter": {
+                "tag": "(FFFE,E0DD)",
+                "tagOffset": 266,
+                "endOffset": 274
+              }
+            },
+            {
+              "tag": "(0001,0002)",
+              "keyword": "",
+              "name": "",
+              "vr": "",
+              "vm": 1,
+              "value": "Nested SQ",
+              "tagOffset": 274,
+              "vrOffset": null,
+              "lengthOffset": 278,
+              "lengthSize": 4,
+              "valueOffset": 282,
+              "valueLength": 9,
+              "undefinedLength": false,
+              "endOffset": 291
+            }
+          ],
+          "delimiter": {
+            "tag": "(FFFE,E00D)",
+            "tagOffset": 291,
+            "endOffset": 299
+          }
+        }
+      ],
+      "delimiter": {
+        "tag": "(FFFE,E0DD)",
+        "tagOffset": 299,
+        "endOffset": 307
+      }
+    },
+    {
+      "tag": "(7FE0,0010)",
+      "keyword": "PixelData",
+      "name": "Pixel Data",
+      "vr": "OW",
+      "vm": 1,
+      "tagOffset": 307,
+      "vrOffset": null,
+      "lengthOffset": 311,
+      "lengthSize": 4,
+      "valueOffset": 315,
+      "valueLength": 2,
+      "undefinedLength": false,
+      "endOffset": 317
+    }
+  ],
+  "warnings": [
+    "the file meta has no Transfer Syntax UID (0002,0010); reading the data set as implicit VR little endian, judged from its first element"
+  ]
+}
