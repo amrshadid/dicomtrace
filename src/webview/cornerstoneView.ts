@@ -290,11 +290,19 @@ export async function showDicom(
   listen(element, Enums.Events.IMAGE_RENDERED, report);
 
   // Panes can be resized or hidden and shown again; keep the canvas the size of its box.
+  // Resize on the next frame: resizing the canvas inside the observer's callback changes
+  // the layout again and makes the browser report a "ResizeObserver loop" error.
+  // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver#observation_errors
+  let resizeFrame = 0;
   const resize = new ResizeObserver(() => {
-    if (element.clientWidth > 0 && element.clientHeight > 0) engine.resize(true, true);
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => {
+      if (element.clientWidth > 0 && element.clientHeight > 0) engine.resize(true, true);
+    });
   });
   resize.observe(element);
   listeners.push(() => {
+    cancelAnimationFrame(resizeFrame);
     resize.disconnect();
   });
   listen(element, Enums.Events.CAMERA_MODIFIED, drawOverlays);

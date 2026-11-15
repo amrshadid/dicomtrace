@@ -46,6 +46,7 @@ export class RasterView {
   private drag: { button: number; x: number; y: number } | null = null;
   private leftTool: LeftTool = 'contrast';
   private readonly resize: ResizeObserver;
+  private resizeFrame = 0;
 
   constructor(
     private readonly container: HTMLElement,
@@ -97,14 +98,19 @@ export class RasterView {
     this.canvas.addEventListener('keydown', (e) => {
       this.onKey(e);
     });
+    // Redraw on the next frame, not inside the observer's callback (see cornerstoneView).
     this.resize = new ResizeObserver(() => {
-      this.draw();
+      cancelAnimationFrame(this.resizeFrame);
+      this.resizeFrame = requestAnimationFrame(() => {
+        this.draw();
+      });
     });
     this.resize.observe(container);
     this.render();
   }
 
   destroy(): void {
+    cancelAnimationFrame(this.resizeFrame);
     this.resize.disconnect();
     this.canvas.remove();
   }
