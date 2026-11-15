@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img">
+  <title>DicomTrace</title>
+  <style>
+    .sheet { fill: #f5f4ef; }
+    .ink { fill: #151515; }
+    .hatch, .edge { stroke: #151515; }
+    .section { stroke: #c8201a; }
+    .byte { fill: #c8201a; }
+    @media (prefers-color-scheme: dark) {
+      .sheet { fill: #1c1c1a; }
+      .ink { fill: #eceae3; }
+      .hatch, .edge { stroke: #eceae3; }
+      .section { stroke: #ff6a5c; }
+      .byte { fill: #ff6a5c; }
+    }
+  </style>
+  <defs>
+    <!-- The letter D (for DICOM), as a monogram in the same system as shadid.dev's A. -->
+    <path id="g" fill-rule="evenodd" d="M6.5 5H16.5C23.5 5 26.5 9.5 26.5 16C26.5 22.5 23.5 27 16.5 27H6.5Z M12.3 10.4H16.2C19.6 10.4 20.7 12.6 20.7 16C20.7 19.4 19.6 21.6 16.2 21.6H12.3Z" />
+    <pattern id="hatching" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line class="hatch" x1="0" y1="0" x2="0" y2="3" stroke-width="1" />
+    </pattern>
+    <clipPath id="above"><rect width="32" height="16" /></clipPath>
+    <clipPath id="below"><rect y="16" width="32" height="16" /></clipPath>
+  </defs>
+  <rect class="sheet" width="32" height="32" />
+  <use href="#g" class="ink" clip-path="url(#above)" />
+  <use href="#g" fill="url(#hatching)" clip-path="url(#below)" />
+  <use href="#g" class="edge" fill="none" stroke-width="1" clip-path="url(#below)" />
+  <!-- The one byte the tool traces to: signal red, in the D's hollow, above the section line. -->
+  <rect class="byte" x="15.3" y="11.6" width="2.6" height="2.6" />
+  <line class="section" x1="1.5" y1="16" x2="30.5" y2="16" stroke-width="1.6" stroke-dasharray="5 1.5 1.5 1.5" />
+</svg>
